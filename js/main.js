@@ -26,6 +26,7 @@ let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
 function register() {
     let username = document.getElementById('registerUsername').value;
+    let email = document.getElementById('registerEmail').value;
     let password = document.getElementById('registerPassword').value;
     let confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -33,16 +34,25 @@ function register() {
         Swal.fire({
             title: "Error",
             text: "Cierra sesión para crear otra cuenta.",
+            icon: "warning"
+        });
+        return;
+    }
+
+    if (username.length < 3 || password.length < 3 || email.length === 0) {
+        Swal.fire({
+            title: "Error",
+            text: "El usuario, contraseña y correo electrónico son obligatorios y deben tener al menos 3 caracteres.",
             icon: "error"
         });
         return;
     }
 
-    if (username.length < 3 || password.length < 3) {
+    if (!isValidEmail(email)) {
         Swal.fire({
             title: "Error",
-            text: "El usuario y contraseña deben tener al menos 3 caracteres.",
-            icon: "error"
+            text: "El correo electrónico ingresado no es válido.",
+            icon: "error",
         });
         return;
     }
@@ -58,6 +68,7 @@ function register() {
 
     let newUser = {
         username: username,
+        email: email,
         password: password
     };
 
@@ -78,6 +89,13 @@ function register() {
         window.location.href = "../index.html";
     });
 }
+
+function isValidEmail(email) {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 
 function logout() {
 
@@ -109,6 +127,15 @@ function logout() {
 function login(event) {
     event.preventDefault();
 
+    if (isLoggedIn) {
+        Swal.fire({
+            title: "Error",
+            text: "Ya has iniciado sesión.",
+            icon: "warning"
+        });
+        return;
+    }
+
     let username = document.getElementById('loginUsername').value;
     let password = document.getElementById('loginPassword').value;
 
@@ -137,6 +164,7 @@ function login(event) {
         });
     }
 }
+
 
 function updateLinksVisibility() {
     if (isLoggedIn) {
@@ -318,94 +346,62 @@ class Videojuego {
     }
 }
 
-function mostrarCatalogo(catalogo) {
-    const catalogoContainer = document.querySelector(".catalogo");
-
-    catalogo.forEach(juego => {
-        const link = document.createElement("a");
-        link.href = `../templates/${formatoNombre(juego.titulo)}`;
-
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        const imagen = document.createElement("img");
-        imagen.src = juego.imagen;
-        imagen.alt = juego.titulo;
-        link.appendChild(imagen);
-
-        const titulo = document.createElement("h2");
-        titulo.textContent = juego.titulo;
-        link.appendChild(titulo);
-
-        const genero = document.createElement("p");
-        genero.textContent = `Género: ${juego.genero}`;
-        link.appendChild(genero);
-
-        const precio = document.createElement("p");
-        precio.textContent = `Precio: $${juego.precio.toFixed(2)}`;
-        link.appendChild(precio);
-
-        card.appendChild(link);
-        catalogoContainer.appendChild(card);
-    });
-}
-
-function formatoNombre(nombre) {
-    return nombre.toLowerCase().replace(/\s+/g, '');
-}
-
 const catalogo = [
-    new Videojuego('The Witcher 3', 'RPG', 29.99, "../assets/media/tw3.jpg"),
-    new Videojuego('The Elder Scrolls 5: Skyrim', 'RPG', 35.99, "../assets/media/skyrim.jpg"),
-    new Videojuego('Red Dead Redemption 2', 'Aventura', 49.99, "../assets/media/rdr2.jpeg"),
-    new Videojuego('Cyberpunk 2077', 'Acción/Aventura', 59.99, "../assets/media/cyberpunk.jpg"),
-    new Videojuego('Minecraft', 'Sandbox', 24.99, "../assets/media/mc.jpg"),
-    new Videojuego('Elden Ring', 'JRPG', 47.99, "../assets/media/er.jpg"),
-    new Videojuego('Rocket League', 'Deportes', 0, "../assets/media/rocketleague.jpg"),
-    new Videojuego('Among Us', 'Multijugador', 4.99, "../assets/media/amongus.jpeg"),
+    new Videojuego('The Witcher 3', 'RPG', 29.99, "../assets/media/tw3.png"),
+    new Videojuego('The Elder Scrolls 5: Skyrim', 'RPG', 35.99, "../assets/media/sk.jpg"),
+    new Videojuego('Red Dead Redemption 2', 'Acción/Aventura', 49.99, "../assets/media/rdr2.jpeg"),
+    new Videojuego('Cyberpunk 2077', 'Acción/Aventura', 59.99, "../assets/media/cp2077.jpg"),
+    new Videojuego('Minecraft', 'Sandbox/Survival', 24.99, "../assets/media/mc.jpg"),
+    new Videojuego('Elden Ring', 'RPG', 47.99, "../assets/media/er.jpg"),
+    new Videojuego('Rocket League', 'Deportes/Multijugador', 0, "../assets/media/rl.jpg"),
+    new Videojuego('Among Us', 'Multijugador', 4.99, "../assets/media/au.jpg"),
     new Videojuego('Assassin\'s Creed Valhalla', 'Acción/Aventura', 44.99, "../assets/media/acv.jpg"),
     new Videojuego('Fear & Hunger 2: Termina', 'Survival/Horror', 11.99, "../assets/media/fah2.jpg"),
     new Videojuego('Hollow Knight', 'Metroidvania', 14.99, "../assets/media/hk.jpg"),
     new Videojuego('Stardew Valley', 'Simulación', 11.99, "../assets/media/sv.jpg"),
-    new Videojuego('Genshin Impact', 'RPG', 0, "../assets/media/gi.jpeg"),
+    new Videojuego('Genshin Impact', 'RPG', 0, "../assets/media/gi.jpg"),
     new Videojuego('Sea of Thieves', 'Aventura', 29.99, "../assets/media/sot.jpg"),
-    new Videojuego('Rainbow Six Siege', 'FPS', 19.99, "../assets/media/r6.jpeg"),
+    new Videojuego('Rainbow Six Siege', 'FPS/Multijugador', 19.99, "../assets/media/r6.jpeg"),
     new Videojuego('Dark Souls: Remastered', 'RPG', 39.99, "../assets/media/ds.jpg"),
-    new Videojuego('Terraria', 'Sandbox', 5.99, "../assets/media/terraria.jpg"),
-    new Videojuego('Hades', 'Roguelite', 4.99, "../assets/media/hades.jpg"),
+    new Videojuego('Terraria', 'Sandbox', 5.99, "../assets/media/ter.jpg"),
+    new Videojuego('Hades', 'Roguelite', 4.99, "../assets/media/had.jpg"),
     new Videojuego('Katana ZERO', 'Acción', 7.99, "../assets/media/kz.jpg"),
+    new Videojuego('The Sims 4', 'Simulación', 0, "../assets/media/ts4.jpg"),
+    new Videojuego('Call of Duty MW II', 'FPS', 69.99, "../assets/media/codmwii.jpg"),
+    new Videojuego('Darkest Dungeon', 'Roguelite/RPG', 12.49, "../assets/media/dd.jpg"),
+    new Videojuego('Ender Lilies', 'Metroidvania', 24.99, "../assets/media/el.png"),
+    new Videojuego('Resident Evil 4', 'Survival/Horror', 29.99, "../assets/media/re4.jpg"),
 ];
 
 
 
-const carrito = new Carrito();
-
-document.addEventListener("DOMContentLoaded", function() {
+function mostrarCatalogo(catalogo) {
     const catalogoContainer = document.querySelector(".catalogo");
 
     catalogo.forEach(juego => {
-        const link = document.createElement("a");
-        link.href = `../templates/${formatoNombre(juego.titulo)}`;
-
         const card = document.createElement("div");
         card.classList.add("card");
 
         const imagen = document.createElement("img");
         imagen.src = juego.imagen;
         imagen.alt = juego.titulo;
-        link.appendChild(imagen);
+        card.appendChild(imagen);
 
         const titulo = document.createElement("h2");
         titulo.textContent = juego.titulo;
-        link.appendChild(titulo);
+        card.appendChild(titulo);
 
         const genero = document.createElement("p");
         genero.textContent = `Género: ${juego.genero}`;
-        link.appendChild(genero);
+        card.appendChild(genero);
 
         const precio = document.createElement("p");
         precio.textContent = `Precio: $${juego.precio.toFixed(2)}`;
-        link.appendChild(precio);
+        card.appendChild(precio);
+
+        const espacio = document.createElement("p");
+        espacio.textContent = "----------";
+        card.appendChild(espacio);
 
         const agregarBtn = document.createElement("button");
         agregarBtn.textContent = "Agregar al Carrito";
@@ -415,16 +411,121 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         card.appendChild(agregarBtn);
 
-        card.appendChild(link);
+        catalogoContainer.appendChild(card);
+
+        catalogoContainer.appendChild(card);
+    });
+}
+
+function formatoNombre(nombre) {
+    return nombre.toLowerCase().replace(/\s+/g, '');
+}
+
+const carrito = new Carrito();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const catalogoContainer = document.querySelector(".catalogo");
+
+    catalogo.forEach(juego => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const imagen = document.createElement("img");
+        imagen.src = juego.imagen;
+        imagen.alt = juego.titulo;
+        card.appendChild(imagen);
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = juego.titulo;
+        card.appendChild(titulo);
+
+        const genero = document.createElement("p");
+        genero.textContent = `Género: ${juego.genero}`;
+        card.appendChild(genero);
+
+        const precio = document.createElement("p");
+        precio.textContent = `Precio: $${juego.precio.toFixed(2)}`;
+        card.appendChild(precio);
+
+        const espacio = document.createElement("p");
+        espacio.textContent = "----------";
+        card.appendChild(espacio);
+
+        const agregarBtn = document.createElement("button");
+        agregarBtn.textContent = "Agregar al Carrito";
+        agregarBtn.classList.add("agregar-btn");
+        agregarBtn.addEventListener("click", function() {
+            carrito.agregarAlCarrito(juego);
+        });
+        card.appendChild(agregarBtn);
+
         catalogoContainer.appendChild(card);
     });
 });
 
 function formatoNombre(nombre) {
-
     return nombre.toLowerCase().replace(/\s+/g, '');
 }
 
 function mostrarCarrito() {
     carrito.mostrarCarrito();
 }
+
+function buscarVideojuego() {
+    const terminoBusqueda = document.getElementById('busquedaInput').value.trim().toLowerCase();
+
+    const generoRPG = document.getElementById('generoRPG').checked;
+    const generoAccion = document.getElementById('generoAccion').checked;
+    const generoAventura = document.getElementById('generoAventura').checked;
+    const generoSandbox = document.getElementById('generoSandbox').checked;
+    const generoSurvival = document.getElementById('generoSurvival').checked;
+    const generoFPS = document.getElementById('generoFPS').checked;
+    const generoHorror = document.getElementById('generoHorror').checked;
+    const generoSimulación = document.getElementById('generoSimulación').checked;
+    const generoMultijugador = document.getElementById('generoMultijugador').checked;
+    const generoDeportes = document.getElementById('generoDeportes').checked;
+    const generoRoguelite = document.getElementById('generoRoguelite').checked;
+    const generoMetroidvania = document.getElementById('generoMetroidvania').checked;
+    
+    const resultados = catalogo.filter(videojuego => {
+        const tituloIncluido = videojuego.titulo.toLowerCase().includes(terminoBusqueda);
+        const generoIncluido = (
+            (generoRPG && videojuego.genero.toLowerCase().includes('rpg')) ||
+            (generoAccion && videojuego.genero.toLowerCase().includes('acción')) ||
+            (generoAventura && videojuego.genero.toLowerCase().includes('aventura')) ||
+            (generoSandbox && videojuego.genero.toLowerCase().includes('sandbox')) ||
+            (generoSurvival && videojuego.genero.toLowerCase().includes('survival')) ||
+            (generoFPS && videojuego.genero.toLowerCase().includes('fps')) ||
+            (generoHorror && videojuego.genero.toLowerCase().includes('horror')) ||
+            (generoSimulación && videojuego.genero.toLowerCase().includes('simulación')) ||
+            (generoMultijugador && videojuego.genero.toLowerCase().includes('multijugador')) ||
+            (generoDeportes && videojuego.genero.toLowerCase().includes('deportes')) ||
+            (generoRoguelite && videojuego.genero.toLowerCase().includes('roguelite')) ||
+            (generoMetroidvania && videojuego.genero.toLowerCase().includes('metroidvania'))
+        );
+        return tituloIncluido && generoIncluido;
+    });
+
+    const catalogoContainer = document.querySelector(".catalogo");
+    catalogoContainer.innerHTML = '';
+
+    mostrarCatalogo(resultados);
+
+    if (resultados.length === 0) {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = 'No se encontraron resultados.';
+        mensaje.classList.add('no-result-message');
+        catalogoContainer.innerHTML = '';
+        catalogoContainer.appendChild(mensaje);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+    
+    buscarVideojuego();
+});

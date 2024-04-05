@@ -21,18 +21,18 @@ body{
 }
 
 .nav{
-    background-color:rgb(22, 22, 22);
     padding: 30px;
 }
 
 .nav-ico{
     width: 4rem;
     margin-left: 20px;
-    border-radius: 100%;
+    border-radius: 50%;
+    border: 3px solid white;
 }
 
 .navbar{
-    background-color:rgb(22, 22, 22);
+    background-image: linear-gradient(to top, rgb(34, 34, 34), #161616);
     padding: 30px;
     border-bottom: 2px solid white;
 }
@@ -60,13 +60,14 @@ ul{
 .title{
     color: white;
     font-size: 4rem;
-    margin-top: 20rem
+    margin-top: 15rem
 }
 
 .title2{
     color: white;
     font-size: 4rem;
-    margin-top: 10rem
+    margin-top: 3rem;
+    margin-bottom: 3rem
 }
 
 .btn-danger{
@@ -82,6 +83,13 @@ ul{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: linear-gradient(to top, rgb(34, 34, 34), #161616);
+    max-width: 50rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border: 3px solid white;
+    border-radius: 1rem;
 }
 
 .form-container > div {
@@ -117,7 +125,7 @@ ul{
     width: 300px;
     padding: 20px;
     padding-bottom: 40px;
-    background-color:#161616;
+    background-image: linear-gradient(to right, rgb(34, 34, 34), #161616);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: 3px solid rgb(173, 173, 173);
@@ -149,20 +157,6 @@ a {
     color: inherit;
 }
 
-.carritocontainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10rem;
-}
-
-.carritobuttoncontainer{
-    background-color: #161616;
-    border: 4px solid white;
-    border-radius: 20px;
-    padding: 15px;
-}
-
 .carritobutton{
     width: 50px;
     height: 50px;
@@ -190,7 +184,7 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #4E0186;  
+    background-image: linear-gradient(to top, rgb(34, 34, 34), #161616);
     color: #fff;
     padding: 20px;
     border: none;
@@ -199,5 +193,121 @@ a {
 }
 
 .agregar-btn:hover {
-    background-color: #7801cb;
+    background-image: linear-gradient(to top, #161616, rgb(34, 34, 34));
+}
+
+.footer-tienda {
+    background-image: linear-gradient(to right, rgb(34, 34, 34), #161616);
+    border-top: 2px solid white;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+
+.footer-bottom0 {
+    background-image: linear-gradient(to right, rgb(34, 34, 34), #161616);
+    border-top: 2px solid white;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+footer p {
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+footer img {
+    width: 70px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 0px;
+}
+
+.icon {
+    width: 1.5rem;
+    border: 0;
+    border-radius: 0;
+}
+
+.footer-txt {
+    font-size: 0.8rem;
+}
+
+.footer-item {
+    margin-right: 7rem;
+}
+
+.footer-item2 {
+    margin-right: 70rem;
+}
+
+.filtro{
+    display: none;
+}
+
+.content{
+    flex: 1
+}
+
+.wrapper{
+    display:flex
+}
+
+.checkbox-container {
+    width: 17.5rem;
+    height: 42rem;
+    background-image: linear-gradient(to right, rgb(34, 34, 34), #161616);
+    padding: 20px;
+    color: white;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    margin-left: auto;
+    margin-top: 10rem
+  }
+
+.checkbox{
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.buscar-input{
+    width: 10rem;
+    height: 2.2rem;
+    margin-bottom: 0rem;
+}
+
+.buscar-container{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-primary{
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.no-result-message {
+    color: white;
+    font-size: 2rem;
 }
